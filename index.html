@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Vue Js Ticket Booking App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap" rel="stylesheet">
+        <script src="assets/js/vue.global.js"></script>
+    </head>
+    <body>
+        
+        <div class="container" id="app">
+            <div class="ticket-book">
+                <div class="sec-title">
+                    <h3>Ticket Booking App</h3>
+                </div>
+                <div class="confirm-dialog" v-if="confirmed == true">
+                    <div class="section-title">
+                        <h3 style="color : green">Your Ticket Is Confirm</h3>
+                    </div>
+                    <div class="details mt-2">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name : </th>
+                                    <th>{{name}}</th>
+                                </tr>
+                                <tr>
+                                    <th>Seats : </th>
+                                    <th>
+                                        <span v-for="value in slectedSeats">{{value.name}} ,</span>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>Price : </th>
+                                    <th>{{totalCost}} /-</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div class="col-12">
+                            <button @click="reset" class="btn btn-btn-sm btn-dark w-100"> Book Again</button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="ticket-book-wrap">
+                    <div class="ticket-book-header">
+                        <div class="ticket-hint">
+                            <div class="row">
+                                <div class="col-lg-3" v-for="(value,i) in seatHints" id="hint-single">
+                                    <div 
+                                    :class="{
+                                        'hint sold' : value.type === 'sold',
+                                        'hint available' : value.type === 'available',
+                                        'hint booked' : value.type === 'booked',
+                                        'hint selected' : value.type === 'selected',
+                                    }">
+
+                                    </div>
+                                    <div class="hint-text">
+                                        {{value.text}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="vehicle">
+                            <div class="row">
+                                <div class="col-lg-5">
+                                    <div class="vehicle-left">
+                                        <div class="vehicle-top">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="door">
+                                                        Door
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="driver">
+                                                        Driver
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="vehicle-body">
+                                            <div class="row">
+
+                                                <div class="col-lg-3 col-3 seat" id="" v-for="(value,i) in seatBench">
+                                                    <div 
+                                                    :class="{
+                                                        'seat-box available' : value.type == 'available',
+                                                        'seat-box sold' : value.type == 'sold',
+                                                        'seat-box booked' : value.type == 'booked',
+                                                        'seat-box selected' : value.type == 'selected',
+                                                    }"
+                                                    @click="seatCLick(i)">
+                                                        {{value.name}}
+                                                    </div>
+                                                </div>
+                                        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-7">
+
+                                    <div class="no-seats-alert mt-5" v-if="slectedSeats.length == 0">
+                                        <div class="alert alert-danger">
+                                            There Are No Selected Seats
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-section-customer" v-if="slectedSeats.length > 0">
+                                        <div class="table-description">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Serial No</th>
+                                                        <th>Seat Name</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="(value,i) in slectedSeats">
+                                                        <td>{{i = i + 1}}</td>
+                                                        <td>{{value.name}}</td>
+                                                        <td>{{value.price}} /-</td>
+                                                    </tr>
+                                                    <tr v-if="appliedCuppon != null">
+                                                        <td colspan="2">Discount</td>
+                                                        <td>{{appliedCuppon.discount}}/-</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">Total</td>
+                                                        <td><b>{{totalCost}} /-</b></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+    
+                                        <div class="form-group row">
+                                            <div class="col-4" v-if="appliedCuppon == null">
+                                                Apply A Cuppon : 
+                                            </div>
+                                            <div class="col-4" v-else>
+                                                Applied Cuppon : 
+                                            </div>
+                                            <div class="col-8" v-if="appliedCuppon == null">
+                                                <input type="text" class="form-control" v-model="cupponCode" placeholder="Enter 10 Digint Cuppon">
+                                            </div>
+                                            <div class="col-8" v-else>
+                                                {{appliedCuppon.cuppon_name}}
+                                            </div>
+                                        </div>
+    
+                                        <div class="form-group row mt-5">
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" v-model="name" placeholder="Enter Your Name">
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="text" class="form-control" v-model="mobile" placeholder="Enter Your Mobile">
+                                            </div>
+                                            <div class="col-12 mt-3">
+                                                <button @click="confirm" class="btn btn-block btn-info btn-sm w-100">Confirm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/config.js"></script>
+    </body>
+</html>

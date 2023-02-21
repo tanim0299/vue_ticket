@@ -1,0 +1,109 @@
+body{
+    font-family: 'Mulish', sans-serif;
+}
+
+.sec-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.hint {
+    height: 30px;
+    width: 30px;
+    border: 1px solid gray;
+    /* background: red; */
+    float: left;
+    margin-right: 10px;
+}
+
+.sold{
+    background-color: red;
+    color: white;
+}
+.available{
+    background-color: white;
+    color: black;
+    border: 1px solid lightgray;
+}
+.selected{
+    background-color: green;
+    color : white;
+}
+.booked{
+    background-color: gray;
+    color : black;
+}
+.ticket-book-wrap {
+    margin-top: 20px;
+    background: white;
+    border: 1px solid lightgray;
+    padding: 13px;
+    box-shadow: 0px 0px 2px gray;
+}
+.vehicle {
+    border: 1px solid lightblue;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.vehicle-left {
+    border: 1px solid lightgray;
+    padding: 6px;
+}
+.door {
+    border: 1px solid lightgray;
+    width: 81px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+.driver {
+    border: 1px solid lightgray;
+    width: 81px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    float: right;
+}
+.seat-box {
+    height: 40px;
+    width: 40px;
+    /* float: left; */
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
+.vehicle-body {
+    margin-top: 20px;
+}
+.seat {
+    padding: 0px !important;
+    width: 14% !important;
+    margin-top: 20px !important;
+}
+
+.seat:nth-child(4n - 1) {
+    margin-left: 176px;
+}
+
+.vehicle-body {
+    padding: 20px;
+}
+
+.confirm-dialog{
+    position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  padding: 33px;
+}
+
+.container {
+    position: relative;
+}
